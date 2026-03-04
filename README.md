@@ -1,8 +1,8 @@
 # Serial Monitor
 
-A professional, 100% client-side web-based serial monitor for embedded systems development. Connect to serial ports directly from your browser using the **Web Serial API**. Visualize data in real-time, decode protocols, and manage complex debugging workflows without any backend server.
+A professional, 100% client-side web-based serial monitor for embedded systems development. Connect to serial ports directly from your browser using the **Web Serial API**. Visualize data in real-time, decode protocols, and manage complex debugging workflows, no backend server required.
 
-![Version](https://img.shields.io/badge/version-v1.0.1-orange?style=flat)
+![Version](https://img.shields.io/badge/version-v1.1.0-orange?style=flat)
 ![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=flat&logo=html5&logoColor=white)
 ![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=flat&logo=css3&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=flat&logo=javascript&logoColor=%23F7DF1E)
@@ -16,93 +16,78 @@ A professional, 100% client-side web-based serial monitor for embedded systems d
 
 ## Features
 
-- **Multi-Channel Connections** - Open multiple serial ports simultaneously in a tabbed interface.
-- **Real-Time Terminal** - High-performance terminal with auto-scroll, timestamps, and regex search.
-- **Live Data Plotter** - Visualize numeric data streams with auto-scaling charts.
-- **Protocol Decoders** - Built-in Modbus RTU and SLIP decoders, with easily extensible frontend plugins.
-- **Data Export** - Export logs in TXT, CSV, or JSON formats with optional filtering.
-- **Send Modes** - Transmit data in ASCII, HEX, or Binary with optional auto-repeat.
-- **Live Statistics** - Monitor RX/TX throughput, byte counts, line counts, errors, and uptime.
-- **Dark Theme** - Elegant, professional dark mode UI.
+- **Multi-Tab Connections** - Open multiple serial ports simultaneously, each in its own independent tab with isolated history, stats, and settings.
+- **Real-Time Terminal** - High-performance terminal with auto-scroll, timestamps, and regex-powered search.
+- **Live Data Plotter** - Visualize incoming numeric data streams with auto-scaling charts; collapsible panel.
+- **Protocol Decoders** - Built-in **Modbus RTU** and **SLIP** decoders via a frontend plugin system.
+- **Data Export** - Export logs as **TXT**, **CSV**, or **JSON** with optional filtering.
+- **Flexible Send Modes** - Transmit in **ASCII**, **HEX**, or **Binary** with configurable auto-repeat (pause/resume supported).
+- **Live Statistics** - Per-tab tracking of RX/TX throughput, byte counts, line counts, errors, and uptime.
+- **Full Serial Configuration** - Set baud rate (including custom), data bits, parity, stop bits, and flow control per tab.
+- **Light & Dark Theme** - Toggle between light and dark mode; preference is saved across sessions.
+- **Keyboard Shortcuts** - Productive power-user workflow without lifting your hands off the keyboard.
+
+## Keyboard Shortcuts
+
+| Shortcut         | Action                      |
+|------------------|-----------------------------|
+| `Ctrl + T`       | Open a new monitor tab      |
+| `Ctrl + W`       | Close the current tab       |
+| `Ctrl + Shift + C` | Clear the active terminal |
+| `Enter`          | Send data from the send bar |
 
 ## Prerequisites
 
-- **A supported browser**: Google Chrome, Microsoft Edge, or Opera (Firefox/Safari do not support Web Serial API yet).
+- **A supported browser**: Google Chrome, Microsoft Edge, or Opera  
+  *(Firefox and Safari do not support the Web Serial API)*
 - **A serial device**: USB-to-UART adapter, Arduino, ESP32, Raspberry Pi Pico, etc.
 
 ## Getting Started
 
-Since this is a fully static client-side application, you do not need Node.js, Python, or any other backend.
+This is a fully static, client-side application - no Node.js, Python, or backend needed.
 
-### Option 1: Live Demo 
+### Option 1: Live Demo
 
-1. Plug your device into your computer.
-2. Open the webpage.
-3. Click "Connect New Port" to authorize the browser to access your USB port.
+**[Serial Monitor](https://bharanidharanrangaraj.github.io/serial-monitor/)**
+
+1. Plug your serial device into your computer.
+2. Open the **link above** in a supported browser.
+3. Click **"+ New"** to authorize the browser to access your USB/serial port.
+4. Select the authorized port, configure baud rate and serial settings, then click **Connect**.
 
 ### Option 2: Run Locally
-You can run this locally using any simple HTTP server (browsers require `http://` or `https://` for Web Serial, not `file://`).
 
-Using Python:
+Browsers require `http://` or `https://` to use the Web Serial API (not `file://`). Serve the folder with any simple HTTP server:
+
+**Using Python:**
 ```bash
 python3 -m http.server 8000
-# Open http://localhost:8000 in Chrome
+# Open http://localhost:8000 in Chrome/Edge
 ```
 
-Using Node.js:
+**Using Node.js:**
 ```bash
 npx serve .
-# Open http://localhost:3000 in Chrome
-```
-
-## Project Structure
-
-```
-Serial-Monitor/
-├── README.md              # Project documentation
-├── index.html             # Main interface
-├── css/                   # Styling
-└── js/
-    ├── serial-manager.js  # Web Serial API wrapper
-    ├── app.js             # Main frontend logic
-    ├── terminal.js        # Advanced text rendering
-    ├── plotter.js         # Canvas-based charting
-    └── plugins/           # Protocol decoders
-        ├── modbus-rtu.js
-        └── slip-decoder.js
-```
-
-## Protocol Decoder Plugins
-
-Serial Monitor supports custom protocol decoders explicitly built for the browser. 
-
-To create a new decoder, create a `.js` file in `js/plugins/` and add the `<script>` tag to `index.html`.
-
-**Plugin Format (`my-decoder.js`):**
-```javascript
-window.Plugins = window.Plugins || {};
-
-window.Plugins['My Custom Decoder'] = {
-    name: 'My Custom Decoder',
-    description: 'Decodes custom protocol frames',
-    
-    // Process arriving raw data stream (Uint8Array)
-    processRx(uint8ArrayData) {
-        // ... logic ...
-        return [{
-            protocol: 'Custom',
-            fields: { payloadHex: '...' },
-            display: `[Custom] Message received`
-        }];
-    }
-};
+# Open http://localhost:3000 in Chrome/Edge
 ```
 
 ## Tech Stack
 
-- **Frontend** - Vanilla HTML / CSS / JavaScript (No frameworks)
-- **Hardware Comms** - standard [Web Serial API (`navigator.serial`)](https://developer.mozilla.org/en-US/docs/Web/API/Web_Serial_API)
-- **Fonts** - [Inter](https://rsms.me/inter/) & [JetBrains Mono](https://www.jetbrains.com/lp/mono/)
+| Layer | Technology |
+|---|---|
+| Frontend | Vanilla HTML / CSS / JavaScript (zero frameworks) |
+| Serial Comms | [Web Serial API (`navigator.serial`)](https://developer.mozilla.org/en-US/docs/Web/API/Web_Serial_API) |
+| Fonts | [Inter](https://rsms.me/inter/) & [JetBrains Mono](https://www.jetbrains.com/lp/mono/) |
+
+## Browser Support
+
+| Browser | Supported |
+|---|---|
+| Google Chrome 89+ | ✅ |
+| Microsoft Edge 89+ | ✅ |
+| Opera 75+ | ✅ |
+| Firefox | ❌ (Web Serial not supported) |
+| Safari | ❌ (Web Serial not supported) |
 
 ## License
 

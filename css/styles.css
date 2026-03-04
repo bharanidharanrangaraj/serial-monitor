@@ -65,6 +65,52 @@
     --ch8: #ff7043;
 }
 
+/* ── CSS Custom Properties (Light Theme) ── */
+[data-theme="light"] {
+    --bg-primary: #ffffff;
+    --bg-secondary: #f3f4f6;
+    --bg-tertiary: #e5e7eb;
+    --bg-elevated: #ffffff;
+    --bg-hover: #e5e7eb;
+    --bg-glass: rgba(255, 255, 255, 0.92);
+
+    --text-primary: #111827;
+    --text-secondary: #4b5563;
+    --text-muted: #6b7280;
+    --text-inverse: #ffffff;
+
+    --accent: #d97706; /* Adjusted for better contrast on light */
+    --accent-hover: #b45309;
+    --accent-glow: rgba(217, 119, 6, 0.1);
+    
+    --success: #059669;
+    --success-glow: rgba(5, 150, 105, 0.1);
+    --warning: #d97706;
+    --danger: #dc2626;
+    --danger-glow: rgba(220, 38, 38, 0.1);
+
+    --rx-color: #059669;
+    --tx-color: #d97706;
+
+    --border-color: #e5e7eb;
+    --border-subtle: rgba(0, 0, 0, 0.04);
+
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 8px 28px rgba(0, 0, 0, 0.1);
+    --shadow-glow: 0 0 12px var(--accent-glow);
+
+    /* Plotter channel colors (slightly darker for light theme) */
+    --ch1: #d97706;
+    --ch2: #059669;
+    --ch3: #c2410c;
+    --ch4: #dc2626;
+    --ch5: #7c3aed;
+    --ch6: #db2777;
+    --ch7: #0ea5e9;
+    --ch8: #ea580c;
+}
+
 /* ── Reset & Base ── */
 *,
 *::before,
