@@ -1,5 +1,5 @@
 /**
- * Search — Full-text search with regex support across terminal output
+ * Search - Full-text search with regex support across terminal output
  */
 const Search = {
     matches: [],

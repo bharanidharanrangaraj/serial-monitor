@@ -1,5 +1,5 @@
 /**
- * Protocol Viewer — Displays decoded protocol frames
+ * Protocol Viewer - Displays decoded protocol frames
  */
 const ProtocolViewer = {
     container: null,

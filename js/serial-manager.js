@@ -1,5 +1,5 @@
 /**
- * SerialManager — Frontend Web Serial API wrapper
+ * SerialManager - Frontend Web Serial API wrapper
  * Handles multiple simultaneous port connections (multi-channel).
  */
 

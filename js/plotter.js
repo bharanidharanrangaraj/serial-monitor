@@ -1,5 +1,5 @@
 /**
- * Plotter — Real-time multi-channel Canvas 2D line chart
+ * Plotter - Real-time multi-channel Canvas 2D line chart
  * Parses CSV numeric data from serial, renders at 60fps
  */
 const Plotter = {
@@ -67,7 +67,7 @@ const Plotter = {
     },
 
     /**
-     * Feed a serial line to the plotter — parses CSV numbers
+     * Feed a serial line to the plotter - parses CSV numbers
      * @param {string} line - e.g. "12.5,67.3,45.0"
      */
     feed(line) {

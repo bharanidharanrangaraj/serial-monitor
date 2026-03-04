@@ -1,5 +1,5 @@
 /**
- * Export — Export logs dialog
+ * Export - Export logs dialog
  */
 const Export = {
     init() {

@@ -1,5 +1,5 @@
 /**
- * Terminal — Virtual-scrolling terminal renderer for high-performance log display
+ * Terminal - Virtual-scrolling terminal renderer for high-performance log display
  * Handles 10M+ lines via DOM recycling (only renders visible rows)
  */
 const Terminal = {

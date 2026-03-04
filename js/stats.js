@@ -1,5 +1,5 @@
 /**
- * Stats — Real-time statistics display
+ * Stats - Real-time statistics display
  */
 const Stats = {
     bytesRx: 0,
@@ -71,7 +71,7 @@ const Stats = {
             const elapsed = Date.now() - this.connectedAt;
             document.getElementById('stat-uptime').textContent = this._formatDuration(elapsed);
         } else {
-            document.getElementById('stat-uptime').textContent = '—';
+            document.getElementById('stat-uptime').textContent = '-';
         }
 
         // Throughput

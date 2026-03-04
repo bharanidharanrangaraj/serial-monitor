@@ -1,5 +1,5 @@
 /**
- * Theme Manager — Light & Dark theme support
+ * Theme Manager - Light & Dark theme support
  */
 const ThemeManager = {
     init() {

@@ -1,5 +1,5 @@
 /**
- * App — Main application controller
+ * App - Main application controller
  * Multi-tab architecture: each tab has a unique channelId.
  * All WebSocket messages include channelId so the backend routes to the correct serial connection.
  */
@@ -137,7 +137,7 @@ const App = {
         const select = document.getElementById('port-select');
         const currentVal = select.value;
 
-        select.innerHTML = '<option value="">— Select Authorized Port —</option>';
+        select.innerHTML = '<option value="">- Select Authorized Port -</option>';
         (ports || []).forEach(p => {
             const opt = document.createElement('option');
             opt.value = p.id;
