@@ -1,0 +1,63 @@
+#!/bin/sh
+#
+# commit-msg hook - Auto-bumps version based on commit message
+#
+# Usage (determined by commit message prefix):
+#   feat: or feature: -> minor bump (0.X.0)
+#   anything else     -> patch bump (0.0.X)
+
+COMMIT_MSG_FILE="$1"
+COMMIT_MSG=$(cat "$COMMIT_MSG_FILE")
+
+# Get the project root (where version.json lives)
+PROJECT_ROOT=$(git rev-parse --show-toplevel)
+VERSION_FILE="$PROJECT_ROOT/version.json"
+README_FILE="$PROJECT_ROOT/README.md"
+
+# Read current version
+if [ ! -f "$VERSION_FILE" ]; then
+    echo "version.json not found, skipping version bump."
+    exit 0
+fi
+
+CURRENT_VERSION=$(grep -o '"version": *"[^"]*"' "$VERSION_FILE" | grep -o '[0-9]*\.[0-9]*\.[0-9]*')
+
+if [ -z "$CURRENT_VERSION" ]; then
+    echo "Could not parse version from version.json, skipping."
+    exit 0
+fi
+
+# Split into major.minor.patch
+MAJOR=$(echo "$CURRENT_VERSION" | cut -d. -f1)
+MINOR=$(echo "$CURRENT_VERSION" | cut -d. -f2)
+PATCH=$(echo "$CURRENT_VERSION" | cut -d. -f3)
+
+# Determine bump type from commit message
+case "$COMMIT_MSG" in
+    feat:*|feat\(*|feature:*|feature\(*)
+        # Minor bump
+        MINOR=$((MINOR + 1))
+        PATCH=0
+        BUMP_TYPE="minor"
+        ;;
+    *)
+        # Patch bump
+        PATCH=$((PATCH + 1))
+        BUMP_TYPE="patch"
+        ;;
+esac
+
+NEW_VERSION="$MAJOR.$MINOR.$PATCH"
+
+echo "Auto version bump ($BUMP_TYPE): $CURRENT_VERSION -> $NEW_VERSION"
+
+# Update version.json
+sed -i "s/\"version\": *\"$CURRENT_VERSION\"/\"version\": \"$NEW_VERSION\"/" "$VERSION_FILE"
+
+# Update README badge
+sed -i "s/version-v[0-9]*\.[0-9]*\.[0-9]*/version-v$NEW_VERSION/" "$README_FILE"
+
+# Stage the updated files
+git add "$VERSION_FILE" "$README_FILE"
+
+exit 0
