@@ -27,15 +27,6 @@ A professional, 100% client-side web-based serial monitor for embedded systems d
 - **Light & Dark Theme** - Toggle between light and dark mode; preference is saved across sessions.
 - **Keyboard Shortcuts** - Productive power-user workflow without lifting your hands off the keyboard.
 
-## Keyboard Shortcuts
-
-| Shortcut         | Action                      |
-|------------------|-----------------------------|
-| `Ctrl + T`       | Open a new monitor tab      |
-| `Ctrl + W`       | Close the current tab       |
-| `Ctrl + Shift + C` | Clear the active terminal |
-| `Enter`          | Send data from the send bar |
-
 ## Prerequisites
 
 - **A supported browser**: Google Chrome, Microsoft Edge, or Opera  
