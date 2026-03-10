@@ -2,7 +2,7 @@
 
 A professional, 100% client-side web-based serial monitor for embedded systems development. Connect to serial ports directly from your browser using the **Web Serial API**. Visualize data in real-time, decode protocols, and manage complex debugging workflows, no backend server required.
 
-![Version](https://img.shields.io/badge/version-v1.2.1-orange?style=flat)
+![Version](https://img.shields.io/badge/version-v1.2.2-orange?style=flat)
 ![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=flat&logo=html5&logoColor=white)
 ![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=flat&logo=css3&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=flat&logo=javascript&logoColor=%23F7DF1E)

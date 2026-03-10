@@ -1424,6 +1424,18 @@ select.input {
     color: var(--text-muted);
 }
 
+.about-copyright a {
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 500;
+    position: relative;
+    z-index: 10;
+}
+
+.about-copyright a:hover {
+    text-decoration: underline;
+}
+
 
 
 /* ═══════════ RESPONSIVE ═══════════ */
