@@ -38,7 +38,7 @@ This is a fully static, client-side application - no Node.js, Python, or backend
 
 ### Option 1: Live Demo
 
-**[Serial Monitor](https://bharanidharanrangaraj.github.io/serial-monitor/)**
+**[Serial Monitor](https://espflasher.bharanidharanrangaraj.in)**
 
 1. Plug your serial device into your computer.
 2. Open the **link above** in a supported browser.
