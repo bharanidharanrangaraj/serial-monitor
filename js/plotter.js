@@ -134,7 +134,7 @@ const Plotter = {
 
         if (channels.length === 0) {
             ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--text-muted').trim() || '#64748b';
-            ctx.font = `${13 * dpr}px Inter, sans-serif`;
+            ctx.font = `${13 * dpr}px -apple-system, Segoe UI, sans-serif`;
             ctx.textAlign = 'center';
             ctx.fillText('Waiting for numeric data (CSV format)...', w / 2, h / 2);
             return;
@@ -158,7 +158,7 @@ const Plotter = {
             // Y labels
             const val = yMax - ((yMax - yMin) / gridLines) * i;
             ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--text-muted').trim() || '#64748b';
-            ctx.font = `${10 * dpr}px JetBrains Mono, monospace`;
+            ctx.font = `${10 * dpr}px Cascadia Code, Consolas, monospace`;
             ctx.textAlign = 'right';
             ctx.fillText(val.toFixed(1), padding.left - 6 * dpr, y + 3 * dpr);
         }

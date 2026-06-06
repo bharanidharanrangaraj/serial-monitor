@@ -7,12 +7,8 @@
     <meta name="description"
         content="Professional web-based serial monitor for embedded systems - real-time terminal, plotter, protocol decoders, and macros.">
     <title>Serial Monitor</title>
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; frame-ancestors 'none'; object-src 'none';">
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
-        rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
 </head>
 
@@ -23,7 +19,7 @@
             <div class="logo">
                 <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
                     <rect x="2" y="4" width="24" height="20" rx="3" stroke="currentColor" stroke-width="2" />
-                    <path d="M7 14h4l2-4 2 8 2-4h4" stroke="var(--accent)" stroke-width="2" stroke-linecap="round"
+                    <path d="M7 14h4l2-4 2 8 2-4h4" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                         stroke-linejoin="round" />
                 </svg>
                 <h1>Serial Monitor</h1>
@@ -31,7 +27,6 @@
         </div>
         <div class="header-right">
             <div id="connection-badge" class="badge badge-disconnected">
-                <span class="pulse-dot"></span>
                 <span id="connection-label">Disconnected</span>
             </div>
 
@@ -88,7 +83,7 @@
                     <label for="port-select">Port</label>
                     <div class="input-with-btn">
                         <select id="port-select" class="input">
-                            <option value="">- Select Authorized Port -</option>
+                            <option value="">Select Authorized Port</option>
                         </select>
                         <button class="btn btn-primary" id="btn-request-port" title="Authorize New Port"
                             style="padding: 0 12px;">
@@ -339,12 +334,12 @@
                 <span>HEX</span>
             </label>
             <label class="radio-pill">
-                <input type="radio" name="send-mode" value="binary">
+                <input type="radio" name="send-mode" value="bin">
                 <span>BIN</span>
             </label>
         </div>
         <div class="send-input-wrap">
-            <input type="text" id="send-input" class="input send-input" placeholder="Enter command...">
+            <input type="text" id="send-input" class="input send-input" placeholder="Enter command..." autocomplete="off">
             <button id="btn-send" class="btn btn-accent" title="Send (Enter)">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" />
@@ -414,7 +409,7 @@
                     </svg>
                 </div>
                 <div class="about-app-name">Serial Monitor</div>
-                <div class="about-version-badge">v1.2.2</div>
+                <div class="about-version-badge">v1.3.0</div>
             </div>
             <div class="about-body">
                 <div class="about-license">MIT License</div>
@@ -427,11 +422,12 @@
                     View on GitHub
                 </a>
                 <div class="about-copyright">© 2026 <a href="https://www.bharanidharanrangaraj.in" target="_blank"
-                        rel="noopener noreferrer"></a>Bharani Dharan Rangaraj</a></div>
+                        rel="noopener noreferrer">Bharani Dharan Rangaraj</a></div>
             </div>
         </div>
     </div>
 
+    <!-- Icons: inline SVGs styled after Feather Icons (MIT License, feathericons.com) -->
     <!-- Scripts -->
 
     <script src="js/serial-manager.js"></script>
@@ -446,31 +442,6 @@
     <script src="js/protocol-viewer.js"></script>
     <script src="js/app.js"></script>
 
-    <!-- About Modal Logic -->
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const aboutBtn = document.getElementById('btn-about');
-            const aboutModal = document.getElementById('modal-about');
-
-            aboutBtn.addEventListener('click', () => {
-                aboutModal.style.display = 'flex';
-            });
-
-            // Close buttons
-            aboutModal.querySelectorAll('.modal-close').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    aboutModal.style.display = 'none';
-                });
-            });
-
-            // Click outside to close
-            aboutModal.addEventListener('click', (e) => {
-                if (e.target === aboutModal) {
-                    aboutModal.style.display = 'none';
-                }
-            });
-        });
-    </script>
 </body>
 
 </html>

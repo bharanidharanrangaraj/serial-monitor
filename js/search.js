@@ -75,7 +75,8 @@ const Search = {
             if (regex.test(line.data || '')) {
                 regex.lastIndex = 0; // Reset regex
                 line._searchMatch = true;
-                line._highlightedData = (line.data || '').replace(regex, '<span class="search-highlight">$&</span>');
+                const escaped = this._escapeHtml(line.data || '');
+                line._highlightedData = escaped.replace(regex, '<span class="search-highlight">$&</span>');
                 this.matches.push(i);
             }
         }
@@ -131,5 +132,10 @@ const Search = {
 
     _escapeRegex(str) {
         return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    },
+
+    _escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
     }
 };

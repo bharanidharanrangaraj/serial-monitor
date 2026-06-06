@@ -4,7 +4,6 @@
  */
 const Terminal = {
     lines: [],
-    visibleLines: [],
     container: null,
     autoScroll: true,
     showTimestamps: true,
@@ -33,9 +32,6 @@ const Terminal = {
         // Clear terminal
         document.getElementById('btn-clear-terminal').addEventListener('click', () => {
             this.clear();
-            if (window.App && window.App.ws) {
-                window.App.ws.send(JSON.stringify({ type: 'serial:clear' }));
-            }
         });
 
         // Scroll handler
@@ -106,7 +102,6 @@ const Terminal = {
      * Render visible lines (virtual scrolling)
      */
     _render() {
-        const totalHeight = this.lines.length * this.ROW_HEIGHT;
         const scrollTop = this.container.scrollTop;
         const viewportHeight = this.containerHeight || this.container.clientHeight;
 

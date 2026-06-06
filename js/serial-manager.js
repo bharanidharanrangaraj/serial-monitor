@@ -251,10 +251,14 @@ class SerialManager {
         let uint8Array;
 
         switch (mode) {
-            case 'hex':
+            case 'hex': {
                 const cleanHex = payload.replace(/\s+/g, '');
                 if (cleanHex.length % 2 !== 0) {
                     this.onError(channelId, 'Invalid HEX string (odd number of characters).');
+                    return false;
+                }
+                if (!/^[0-9a-fA-F]+$/.test(cleanHex)) {
+                    this.onError(channelId, 'Invalid HEX string (only 0-9 and a-f allowed).');
                     return false;
                 }
                 uint8Array = new Uint8Array(cleanHex.length / 2);
@@ -262,24 +266,30 @@ class SerialManager {
                     uint8Array[i / 2] = parseInt(cleanHex.substring(i, i + 2), 16);
                 }
                 break;
-            case 'bin':
+            }
+            case 'bin': {
                 const cleanBin = payload.replace(/\s+/g, '');
+                if (!/^[01]+$/.test(cleanBin)) {
+                    this.onError(channelId, 'Invalid binary string (only 0 and 1 allowed).');
+                    return false;
+                }
                 uint8Array = new Uint8Array(Math.ceil(cleanBin.length / 8));
                 for (let i = 0; i < cleanBin.length; i += 8) {
                     const byteStr = cleanBin.substring(i, Math.min(i + 8, cleanBin.length));
                     uint8Array[i / 8] = parseInt(byteStr.padEnd(8, '0'), 2);
                 }
                 break;
+            }
             case 'ascii':
-            default:
+            default: {
                 const textEncoder = new TextEncoder();
-                // Replace escaped newlines if needed, or just append standard CRLF
                 let formatted = payload;
                 if (!formatted.endsWith('\r\n') && !formatted.endsWith('\n')) {
-                    formatted += '\r\n'; // default to CRLF for standard serial
+                    formatted += '\r\n';
                 }
                 uint8Array = textEncoder.encode(formatted);
                 break;
+            }
         }
 
         connData.writer = connData.port.writable.getWriter();

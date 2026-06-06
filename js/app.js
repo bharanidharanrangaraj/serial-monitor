@@ -1,10 +1,8 @@
 /**
  * App - Main application controller
- * Multi-tab architecture: each tab has a unique channelId.
- * All WebSocket messages include channelId so the backend routes to the correct serial connection.
+ * Multi-tab architecture: each tab has a unique channelId mapped to a Web Serial port.
  */
 const App = {
-    ws: null,
     connected: false,
     repeatInterval: null,
     repeatPaused: false,
@@ -34,6 +32,7 @@ const App = {
         this._setupKeyboardShortcuts();
         this._setupCollapsibles();
         this._setupTabs();
+        this._setupAboutModal();
 
         // Expose globally for inline event handlers
         window.App = this;
@@ -84,15 +83,25 @@ const App = {
             tab.lines = tab.lines.slice(-80000);
         }
 
-        // Update tab-level stats
-        tab.stats.bytesRx += (entry.data || '').length;
-        tab.stats.linesRx++;
+        // Update tab-level stats by direction
+        const byteCount = (entry.data || '').length;
+        if (entry.direction === 'tx') {
+            tab.stats.bytesTx += byteCount;
+            tab.stats.linesTx++;
+        } else {
+            tab.stats.bytesRx += byteCount;
+            tab.stats.linesRx++;
+        }
 
         // Only render to terminal/plotter if this is the active tab
         if (channelId === this._getActiveChannelId()) {
             Terminal.addLine(entry);
-            Plotter.feed(entry.data);
-            Stats.incrementRx((entry.data || '').length, true);
+            if (entry.direction !== 'tx') Plotter.feed(entry.data);
+            if (entry.direction === 'tx') {
+                Stats.incrementTx(byteCount);
+            } else {
+                Stats.incrementRx(byteCount, true);
+            }
 
             if (decoded && decoded.length > 0) {
                 ProtocolViewer.addDecoded(decoded);
@@ -137,7 +146,7 @@ const App = {
         const select = document.getElementById('port-select');
         const currentVal = select.value;
 
-        select.innerHTML = '<option value="">- Select Authorized Port -</option>';
+        select.innerHTML = '<option value="">Select Authorized Port</option>';
         (ports || []).forEach(p => {
             const opt = document.createElement('option');
             opt.value = p.id;
@@ -374,8 +383,10 @@ const App = {
         // Update tab info
         const tab = this._getActiveTab();
         if (tab) {
+            const portSelect = document.getElementById('port-select');
+            const selectedOption = portSelect.options[portSelect.selectedIndex];
             tab.port = config.path;
-            tab.name = 'USB ' + config.path;
+            tab.name = selectedOption ? selectedOption.textContent.trim() : config.path;
             this._renderTabs();
         }
     },
@@ -496,7 +507,7 @@ const App = {
     },
 
     _startRepeat() {
-        const interval = parseInt(document.getElementById('send-repeat-interval').value) || 1000;
+        const interval = Math.max(50, parseInt(document.getElementById('send-repeat-interval').value) || 1000);
         this.repeatInterval = setInterval(() => this._sendData(), interval);
     },
 
@@ -554,6 +565,26 @@ const App = {
                 select.appendChild(opt);
             });
         }
+    },
+
+    // ═══════════ About Modal ═══════════
+    _setupAboutModal() {
+        const aboutBtn = document.getElementById('btn-about');
+        const aboutModal = document.getElementById('modal-about');
+
+        aboutBtn.addEventListener('click', () => {
+            aboutModal.style.display = 'flex';
+        });
+
+        aboutModal.querySelectorAll('.modal-close').forEach(btn => {
+            btn.addEventListener('click', () => {
+                aboutModal.style.display = 'none';
+            });
+        });
+
+        aboutModal.addEventListener('click', (e) => {
+            if (e.target === aboutModal) aboutModal.style.display = 'none';
+        });
     },
 
     // ═══════════ Helpers ═══════════
